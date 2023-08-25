@@ -8,18 +8,20 @@ const SingleAnswer = ({ question, answer }) => {
   const dispatch = useDispatch();
 
   const handleAnswerClick = () => {
-    dispatch(setClicked(true));
-    setTimeout(() => {
-      dispatch(setClicked(false));
+    if (!clicked) {
+      dispatch(setClicked(true));
       setTimeout(() => {
-        if (currentQuestion < 9) {
-          dispatch(setTime(30));
-          dispatch(setQuestion(currentQuestion + 1));
-        } else {
-          alert("end 2");
-        }
-      }, 175);
-    }, 2000);
+        dispatch(setClicked(false));
+        setTimeout(() => {
+          if (currentQuestion < 9) {
+            dispatch(setTime(30));
+            dispatch(setQuestion(currentQuestion + 1));
+          } else {
+            alert("end 2");
+          }
+        }, 175);
+      }, 2000);
+    }
   };
 
   return (
