@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setClicked, setQuestion, setTime } from "../store/questions";
+import { setClicked, setQuestion, setTime } from "@/store/questions";
 import classNames from "classnames";
 
 const SingleAnswer = ({ question, answer }) => {

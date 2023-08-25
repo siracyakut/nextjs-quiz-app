@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect } from "react";
-import useCountdown from "@/_ui/hooks/useCountdown";
+import useCountdown from "@/hooks/useCountdown";
 import { useDispatch } from "react-redux";
-import { getQuestions } from "@/_ui/store/questions";
-import Countdown from "@/_ui/components/Countdown";
-import Game from "@/_ui/components/Game";
+import { getQuestions } from "@/store/questions";
+import Countdown from "@/components/Countdown";
+import Game from "@/components/Game";
 
 const GamePage = () => {
   const countdown = useCountdown({ seconds: 5 });

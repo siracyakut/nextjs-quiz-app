@@ -2,9 +2,9 @@ import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import QuestionArea from "./QuestionArea";
 import AnswerArea from "./AnswerArea";
-import shuffle from "@/_ui/utils/shuffle";
+import shuffle from "@/utils/shuffle";
 import UtilsArea from "./UtilsArea";
-import { setQuestion, setTime } from "@/_ui/store/questions";
+import { setQuestion, setTime } from "@/store/questions";
 
 const Game = () => {
   const dispatch = useDispatch();
