@@ -4,7 +4,9 @@ import QuestionArea from "./QuestionArea";
 import AnswerArea from "./AnswerArea";
 import shuffle from "@/utils/shuffle";
 import UtilsArea from "./UtilsArea";
-import { setQuestion, setTime } from "@/store/questions";
+import { actions } from "@/store/questions";
+import useEnd from "@/hooks/useEnd";
+import { useRouter } from "next/navigation";
 
 const Game = () => {
   const dispatch = useDispatch();
@@ -19,17 +21,27 @@ const Game = () => {
       ]),
     [currentQuestion]
   );
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (time > 0) {
-        dispatch(setTime(time - 1));
+        dispatch(actions.setTime(time - 1));
       } else {
-        if (currentQuestion < 9) {
-          dispatch(setQuestion(currentQuestion + 1));
-          dispatch(setTime(30));
+        dispatch(
+          actions.setResult({
+            id: currentQuestion,
+            status: false,
+          })
+        );
+
+        if (currentQuestion < process.env.NEXT_PUBLIC_MAX_QUESTIONS - 1) {
+          dispatch(actions.setQuestion(currentQuestion + 1));
+          dispatch(
+            actions.setTime(process.env.NEXT_PUBLIC_SECONDS_PER_QUESTION)
+          );
         } else {
-          alert("end");
+          useEnd(router, currentQuestion);
         }
       }
     }, 1000);
@@ -39,7 +51,7 @@ const Game = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center flex-col gap-3">
-      <UtilsArea time={time} questCount={currentQuestion} />
+      <UtilsArea time={time} />
       <QuestionArea question={questions[currentQuestion]} />
       <AnswerArea answers={answers} question={questions[currentQuestion]} />
     </div>

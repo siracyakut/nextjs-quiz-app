@@ -1,23 +1,35 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setClicked, setQuestion, setTime } from "@/store/questions";
+import { actions } from "@/store/questions";
 import classNames from "classnames";
+import useEnd from "@/hooks/useEnd";
+import { useRouter } from "next/navigation";
 
 const SingleAnswer = ({ question, answer }) => {
   const { currentQuestion, clicked } = useSelector((state) => state.questions);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleAnswerClick = () => {
     if (!clicked) {
-      dispatch(setClicked(true));
+      dispatch(actions.setClicked(true));
       setTimeout(() => {
-        dispatch(setClicked(false));
+        dispatch(actions.setClicked(false));
         setTimeout(() => {
-          if (currentQuestion < 9) {
-            dispatch(setTime(30));
-            dispatch(setQuestion(currentQuestion + 1));
+          dispatch(
+            actions.setResult({
+              id: currentQuestion,
+              status: question.correctAnswer === answer,
+            })
+          );
+
+          if (currentQuestion < process.env.NEXT_PUBLIC_MAX_QUESTIONS - 1) {
+            dispatch(
+              actions.setTime(process.env.NEXT_PUBLIC_SECONDS_PER_QUESTION)
+            );
+            dispatch(actions.setQuestion(currentQuestion + 1));
           } else {
-            alert("end 2");
+            useEnd(router, currentQuestion);
           }
         }, 175);
       }, 2000);

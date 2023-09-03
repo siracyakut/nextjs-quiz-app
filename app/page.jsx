@@ -10,13 +10,16 @@ const Home = () => {
       <div className="bg-blue-300 p-4 rounded-lg">
         <ul>
           <li className="border-b-2 py-2">
-            » The quiz consists of 10 questions.
+            » The quiz consists of {process.env.NEXT_PUBLIC_MAX_QUESTIONS}{" "}
+            questions.
           </li>
           <li className="border-b-2 py-2">
-            » You have 30 seconds for each question.
+            » You have {process.env.NEXT_PUBLIC_SECONDS_PER_QUESTION} seconds
+            for each question.
           </li>
           <li className="border-b-2 py-2">
-            » You earn 100 points for each correct question.
+            » You earn {process.env.NEXT_PUBLIC_POINTS_PER_QUESTION} points for
+            each correct question.
           </li>
         </ul>
       </div>

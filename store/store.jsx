@@ -1,7 +1,5 @@
-"use client";
-
 import { configureStore } from "@reduxjs/toolkit";
-import questions from "./questions";
+import { reducer as questions } from "./questions";
 
 const store = configureStore({
   reducer: {

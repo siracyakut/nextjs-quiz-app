@@ -1,21 +1,23 @@
-"use client";
-
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  questions: false,
+  questions: [],
+  results: [],
   clicked: false,
   currentQuestion: 0,
   time: 30,
 };
 
-export const getQuestions = createAsyncThunk("getQuestions", async () => {
-  const response = await fetch("https://the-trivia-api.com/v2/questions");
-  const data = await response.json();
-  return data;
-});
+export const getQuestions = createAsyncThunk(
+  "questions/getQuestions",
+  async () => {
+    const response = await fetch("https://the-trivia-api.com/v2/questions");
+    const data = await response.json();
+    return data;
+  }
+);
 
-const questions = createSlice({
+export const { reducer, actions } = createSlice({
   name: "questions",
   initialState,
   reducers: {
@@ -30,6 +32,9 @@ const questions = createSlice({
     setClicked: (state, action) => {
       state.clicked = action.payload;
     },
+    setResult: (state, action) => {
+      state.results[action.payload.id] = action.payload.status;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -41,6 +46,3 @@ const questions = createSlice({
       });
   },
 });
-
-export const { setQuestion, setTime, setClicked } = questions.actions;
-export default questions.reducer;
