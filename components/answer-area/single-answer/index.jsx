@@ -1,33 +1,33 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { actions } from "@/store/questions";
 import classNames from "classnames";
 import useEnd from "@/hooks/useEnd";
 import { useRouter } from "next/navigation";
+import { useQuestions } from "@/store/questions/hooks";
+import {
+  setClicked,
+  setQuestion,
+  setResult,
+  setTime,
+} from "@/store/questions/actions";
+import PropTypes from "prop-types";
 
-const SingleAnswer = ({ question, answer }) => {
-  const { currentQuestion, clicked } = useSelector((state) => state.questions);
-  const dispatch = useDispatch();
+export default function SingleAnswer({ question, answer }) {
+  const { currentQuestion, clicked } = useQuestions();
   const router = useRouter();
 
   const handleAnswerClick = () => {
     if (!clicked) {
-      dispatch(actions.setClicked(true));
+      setClicked(true);
       setTimeout(() => {
-        dispatch(actions.setClicked(false));
+        setClicked(false);
         setTimeout(() => {
-          dispatch(
-            actions.setResult({
-              id: currentQuestion,
-              status: question.correctAnswer === answer,
-            })
-          );
+          setResult({
+            id: currentQuestion,
+            status: question.correctAnswer === answer,
+          });
 
           if (currentQuestion < process.env.NEXT_PUBLIC_MAX_QUESTIONS - 1) {
-            dispatch(
-              actions.setTime(process.env.NEXT_PUBLIC_SECONDS_PER_QUESTION)
-            );
-            dispatch(actions.setQuestion(currentQuestion + 1));
+            setTime(process.env.NEXT_PUBLIC_SECONDS_PER_QUESTION);
+            setQuestion(currentQuestion + 1);
           } else {
             useEnd(router, currentQuestion);
           }
@@ -46,12 +46,15 @@ const SingleAnswer = ({ question, answer }) => {
           "bg-green-700 text-white":
             clicked && question.correctAnswer === answer,
           "bg-red-700 text-white": clicked && question.correctAnswer !== answer,
-        }
+        },
       )}
     >
       {answer}
     </div>
   );
-};
+}
 
-export default SingleAnswer;
+SingleAnswer.propTypes = {
+  question: PropTypes.object.isRequired,
+  answer: PropTypes.string.isRequired,
+};

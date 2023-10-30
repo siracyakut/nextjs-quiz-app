@@ -1,13 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import ResultItem from "@/components/ResultItem";
+import ResultItem from "@/components/result-item";
+import { useQuestions } from "@/store/questions/hooks";
 
-const ResultsPage = () => {
+export default function ResultsPage() {
   const { push } = useRouter();
-  const { results } = useSelector((state) => state.questions);
+  const { results } = useQuestions();
   const sum = results.filter((result) => result === true).length;
 
   useEffect(() => {
@@ -46,6 +46,4 @@ const ResultsPage = () => {
       </div>
     )
   );
-};
-
-export default ResultsPage;
+}

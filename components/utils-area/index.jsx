@@ -1,11 +1,10 @@
 import classNames from "classnames";
-import React from "react";
-import { useSelector } from "react-redux";
+import { useQuestions } from "@/store/questions/hooks";
 
-const UtilsArea = ({ time }) => {
-  const { currentQuestion } = useSelector((state) => state.questions);
+export default function UtilsArea({ time }) {
+  const { currentQuestion } = useQuestions();
 
-  var calc;
+  let calc;
   if (window.innerWidth >= 1024) {
     calc = (time * 908) / process.env.NEXT_PUBLIC_SECONDS_PER_QUESTION;
   } else {
@@ -25,13 +24,11 @@ const UtilsArea = ({ time }) => {
             "bg-green-500 text-black": time >= 20,
             "bg-orange-400 text-black": time >= 10 && time < 20,
             "bg-red-500 text-white": time < 10,
-          }
+          },
         )}
       >
         {time}
       </div>
     </>
   );
-};
-
-export default UtilsArea;
+}

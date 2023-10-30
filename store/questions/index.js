@@ -8,41 +8,44 @@ const initialState = {
   time: 30,
 };
 
-export const getQuestions = createAsyncThunk(
+export const _getQuestions = createAsyncThunk(
   "questions/getQuestions",
   async () => {
     const response = await fetch("https://the-trivia-api.com/v2/questions");
-    const data = await response.json();
-    return data;
-  }
+    return await response.json();
+  },
 );
 
-export const { reducer, actions } = createSlice({
+const questions = createSlice({
   name: "questions",
   initialState,
   reducers: {
-    setQuestion: (state, action) => {
+    _setQuestion: (state, action) => {
       state.currentQuestion = action.payload;
     },
-    setTime: (state, action) => {
+    _setTime: (state, action) => {
       if (!state.clicked) {
         state.time = action.payload;
       }
     },
-    setClicked: (state, action) => {
+    _setClicked: (state, action) => {
       state.clicked = action.payload;
     },
-    setResult: (state, action) => {
+    _setResult: (state, action) => {
       state.results[action.payload.id] = action.payload.status;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getQuestions.fulfilled, (state, action) => {
+      .addCase(_getQuestions.fulfilled, (state, action) => {
         state.questions = action.payload;
       })
-      .addCase(getQuestions.rejected, (state) => {
+      .addCase(_getQuestions.rejected, (state) => {
         state.questions = false;
       });
   },
 });
+
+export const { _setClicked, _setQuestion, _setResult, _setTime } =
+  questions.actions;
+export default questions.reducer;

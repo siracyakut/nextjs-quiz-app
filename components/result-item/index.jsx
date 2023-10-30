@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import React from "react";
+import PropTypes from "prop-types";
 
-const ResultItem = ({ result, idx }) => {
+export default function ResultItem({ result, idx }) {
   return (
     <div
       key={idx}
@@ -20,6 +20,9 @@ const ResultItem = ({ result, idx }) => {
       </span>
     </div>
   );
-};
+}
 
-export default ResultItem;
+ResultItem.propTypes = {
+  result: PropTypes.bool.isRequired,
+  idx: PropTypes.number.isRequired,
+};

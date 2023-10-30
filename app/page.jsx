@@ -1,7 +1,6 @@
 import Link from "next/link";
-import React from "react";
 
-const Home = () => {
+export default function Home() {
   return (
     <div className="w-full h-full flex items-center justify-center flex-col text-center gap-5 font-medium">
       <div className="text-4xl bg-blue-300 p-4 rounded-lg">
@@ -31,6 +30,4 @@ const Home = () => {
       </Link>
     </div>
   );
-};
-
-export default Home;
+}

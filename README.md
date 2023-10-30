@@ -6,7 +6,7 @@ A quiz application developed with Next.js and containing many up-to-date technol
 
 ### Demo
 
-A demo is worth a thousand words.
+A demo is worth a thousand words.\
 [https://nextjs-quiz-app-one.vercel.app/](https://nextjs-quiz-app-one.vercel.app/)
 
 ### Project Support Features
